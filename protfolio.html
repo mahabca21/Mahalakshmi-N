@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maha | Creative BCA Student & Developer Portfolio</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN for live metrics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'cyber-cyan': '#00f2ff',
+              'cyber-purple': '#bc13fe',
+              'soft-bg': '#0a0a0c',
+            },
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif'],
+              mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+      
+      body {
+        background-color: #0a0a0c;
+        color: #e2e8f0;
+        overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
+      }
+
+      /* Custom grid bg styling matching index.css */
+      .grid-bg {
+        background-image: linear-gradient(rgba(0, 242, 255, 0.035) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(0, 242, 255, 0.035) 1px, transparent 1px);
+        background-size: 50px 50px;
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .cyber-border {
+        position: relative;
+        border: 1px solid rgba(0, 242, 255, 0.15);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .cyber-border:hover {
+        border-color: #00f2ff;
+        box-shadow: 0 0 25px rgba(0, 242, 255, 0.18);
+      }
+
+      .glow-dot {
+        width: 8px;
+        height: 8px;
+        background: #00f2ff;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 10px #00f2ff;
+      }
+
+      /* Cursor spotlight glow coordinates */
+      .cursor-glow {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 242, 255, 0.06) 0%, transparent 70%);
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        transform: translate(-55%, -55%);
+        transition: opacity 0.2s ease;
+      }
+
+      /* Reveal animations */
+      .element-reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .element-reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Hide native scrollbar on some terminals */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0c;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #00f2ff;
+      }
+    </style>
+  </head>
+  <body class="relative min-h-screen grid-bg overflow-x-hidden text-slate-200 selection:bg-cyber-cyan/30 selection:text-white">
+    
+    <!-- Cursor Spotlight Overlay -->
+    <div id="cursorGlow" class="cursor-glow hidden md:block" style="left: -200px; top: -200px;"></div>
+
+    <!-- Top scroll meter -->
+    <div id="scrollProgress" class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-cyber-cyan via-cyan-400 to-cyber-purple z-50 w-0 transition-all duration-75"></div>
+
+    <!-- ==========================================
+        HEADER NAVIGATION STATION
+        ========================================== -->
+    <nav id="navbar" class="fixed top-0 w-full z-40 transition-all duration-300 border-b border-transparent py-5">
+      <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+        
+        <a href="#home" class="flex items-center gap-2 group text-2xl font-bold font-display tracking-tighter text-white">
+          <span class="text-cyber-cyan transition-transform group-hover:rotate-12 duration-300">
+            <i data-lucide="code-2" class="w-6 h-6 inline mr-1"></i>
+          </span>
+          MAHA<span class="text-cyber-cyan font-extrabold text-3xl">.</span>
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <div class="hidden md:flex items-center space-x-8 text-xs font-mono font-bold tracking-widest">
+          <a href="#about" class="nav-item relative py-1.5 text-slate-400 hover:text-white transition-colors uppercase">ABOUT</a>
+          <a href="#skills" class="nav-item relative py-1.5 text-slate-400 hover:text-white transition-colors uppercase">SKILLS</a>
+          <a href="#projects" class="nav-item relative py-1.5 text-slate-400 hover:text-white transition-colors uppercase">PROJECTS</a>
+          <a href="#contact" class="nav-item relative py-1.5 text-slate-400 hover:text-white transition-colors uppercase">CONTACT</a>
+          
+          <a href="#contact" class="px-4 py-2 border border-cyber-cyan/30 text-cyber-cyan rounded-md hover:bg-cyber-cyan/10 hover:border-cyber-cyan transition-all font-mono uppercase text-[10px]">
+            CONSOLE
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-slate-400 hover:text-white p-1.5 rounded-lg bg-white/5 border border-white/5" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sliding Mobile Panel Drawer -->
+    <div id="mobileDrawer" class="fixed inset-0 z-50 md:hidden hidden flex justify-end">
+      <!-- Backdrop -->
+      <div id="drawerBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+      <!-- Content Container -->
+      <div class="relative w-72 max-w-sm bg-[#0a0a0c]/98 border-l border-white/10 h-full p-8 flex flex-col justify-between z-10 glass-panel">
+        <div class="space-y-8">
+          <div class="flex justify-between items-center pb-4 border-b border-white/5">
+            <span class="text-xs font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
+              <i data-lucide="terminal" class="w-3.5 h-3.5 text-cyber-cyan"></i> MENU SYSTEM
+            </span>
+            <button id="closeDrawerBtn" class="p-1 text-slate-400 hover:text-white rounded-md border border-white/5 bg-white/5">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="flex flex-col space-y-5 font-display text-lg font-bold">
+            <a href="#about" class="mobile-nav-link block py-1.5 text-slate-400 hover:text-white">ABOUT</a>
+            <a href="#skills" class="mobile-nav-link block py-1.5 text-slate-400 hover:text-white">SKILLS</a>
+            <a href="#projects" class="mobile-nav-link block py-1.5 text-slate-400 hover:text-white">PROJECTS</a>
+            <a href="#contact" class="mobile-nav-link block py-1.5 text-slate-400 hover:text-white">CONTACT</a>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-white/5 select-none font-mono text-[10px] text-slate-600 uppercase">
+          <span>PORTFOLIO v2026.1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+        HERO LANDING DECK (SCATTER EFFECT)
+        ========================================== -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden">
+      <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute top-1/4 -left-20 w-80 h-80 bg-cyber-cyan/10 rounded-full blur-[110px]"></div>
+        <div class="absolute bottom-1/4 -right-10 w-96 h-96 bg-cyber-purple/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div class="max-w-4xl text-center z-10 relative">
+        <div class="space-y-8">
+          
+          <div class="element-reveal opacity-0 active">
+            <div class="inline-flex items-center gap-2.5 px-4.5 py-1.5 rounded-full border border-cyber-cyan/30 bg-cyber-cyan/5 text-cyber-cyan text-xs font-bold uppercase tracking-widest px-4 py-2">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-cyan opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyber-cyan shadow-[0_0_8px_#00f2ff]"></span>
+              </span>
+              Available for internships &amp; Projects
+            </div>
+          </div>
+
+          <div class="space-y-3 element-reveal opacity-0 active">
+            <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tight font-display text-white leading-none">
+              I'M <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-cyan-400 to-cyber-purple">MAHA</span>
+            </h1>
+            <p class="text-base sm:text-xl font-mono text-slate-400 uppercase tracking-widest">
+              [ <span class="text-white font-semibold">BCA STUDENT</span> &amp; CREATIVE DEVELOPER ]
+            </p>
+          </div>
+
+          <div class="element-reveal opacity-0 active">
+            <p class="text-base sm:text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
+              Merging technical database systems with elegant modular layouts to build responsive browser tools. Pursuing Computer Applications with focus on contemporary frontends.
+            </p>
+          </div>
+
+          <div class="element-reveal opacity-0 active pt-4">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href="#contact" class="group px-7 py-4 w-full sm:w-auto bg-cyber-cyan hover:bg-white text-black font-extrabold text-xs tracking-widest font-mono uppercase transition-all duration-300 rounded-sm hover:-translate-y-1 shadow-[0_4px_25px_rgba(0,242,255,0.3)] flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                INITIATE PING
+              </a>
+              <a href="#projects" class="group px-7 py-4 w-full sm:w-auto border border-white/20 hover:border-cyber-purple/50 bg-white/[0.02] hover:bg-cyber-purple/5 text-white font-extrabold text-xs tracking-widest font-mono uppercase transition-all duration-300 rounded-sm flex items-center justify-center gap-2">
+                VIEW WORKS
+                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="element-reveal opacity-0 active pt-10 border-t border-white/5 font-mono max-w-md mx-auto">
+            <div class="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div class="text-xl sm:text-2xl font-extrabold text-white">2+</div>
+                <div class="text-[9px] text-slate-500 uppercase tracking-wider mt-1">Yrs Coding</div>
+              </div>
+              <div>
+                <div class="text-xl sm:text-2xl font-extrabold text-cyber-cyan">15+</div>
+                <div class="text-[9px] text-slate-500 uppercase tracking-wider mt-1">Git Repos</div>
+              </div>
+              <div>
+                <div class="text-xl sm:text-2xl font-extrabold text-cyber-purple">9.4</div>
+                <div class="text-[9px] text-slate-500 uppercase tracking-wider mt-1">C.GPA Rank</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-[10px] font-mono text-slate-500 tracking-widest select-none">
+        <span class="uppercase">SCROLL VECTOR</span>
+        <div class="text-cyber-cyan animate-bounce">
+          <i data-lucide="arrow-down" class="w-4 h-4"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+        ABOUT BIOGRAPHY SECTION (STORY TAB FLIP)
+        ========================================== -->
+    <section id="about" class="py-28 px-6 max-w-6xl mx-auto relative overflow-hidden element-reveal">
+      <div class="absolute top-1/4 -right-10 w-72 h-72 bg-cyber-purple/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="grid md:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Profile Image Representation Left -->
+        <div class="md:col-span-5 relative">
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-cyber-cyan to-cyber-purple rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-700"></div>
+            <div class="relative aspect-[4/5] rounded-2xl overflow-hidden bg-slate-950 border border-white/10">
+              <img 
+                src="https://picsum.photos/seed/profile-maha/800/1000" 
+                alt="Maha Profile Pic" 
+                class="w-full h-full object-cover grayscale opacity-75 group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" 
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+            </div>
+
+            <div class="absolute -bottom-6 -right-5 w-36 py-4 px-5 glass-panel border border-cyber-cyan/30 rounded-xl shadow-lg animate-pulse" style="animation-duration: 5s">
+              <div class="text-xs font-mono font-bold text-center">
+                <div class="text-3xl text-cyber-cyan font-display font-extrabold">BCA</div>
+                <div class="text-[9px] text-slate-400 mt-1 uppercase tracking-widest">Student Scholar</div>
+              </div>
+            </div>
+
+            <div class="absolute top-4 left-4 p-2 rounded-lg bg-black/60 border border-white/5 backdrop-blur-md flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-cyber-cyan">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan animate-ping"></span>
+              G_SYS: #8148
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Description Content Right -->
+        <div class="md:col-span-7 flex flex-col justify-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 text-cyber-cyan text-xs font-semibold tracking-wider font-mono uppercase mb-4 self-start">
+            <span class="w-2 h-2 rounded-full bg-cyber-cyan"></span> SYLLABUS DIRECTORY
+          </div>
+          
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display text-white mb-6 tracking-tight leading-tight">
+            BIOGRAPHY &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-purple">ACADEMIC PATH</span>
+          </h2>
+
+          <!-- Tab Selection Buttons -->
+          <div class="flex border-b border-white/10 mb-8 p-1 bg-black/30 rounded-xl max-w-sm sm:max-w-md">
+            <button data-about-tab="story" class="about-tab-btn flex-1 py-3.5 text-xs font-mono uppercase font-bold tracking-wider rounded-lg transition-all duration-300 bg-gradient-to-r from-cyber-cyan/15 to-cyber-purple/15 border border-cyber-cyan/25 text-white font-extrabold shadow-sm">
+              THE JOURNEY
+            </button>
+            <button data-about-tab="focus" class="about-tab-btn flex-1 py-3.5 text-xs font-mono uppercase font-bold tracking-wider rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200">
+              ACADEMIC FOCUS
+            </button>
+            <button data-about-tab="future" class="about-tab-btn flex-1 py-3.5 text-xs font-mono uppercase font-bold tracking-wider rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200">
+              FUTURE VISION
+            </button>
+          </div>
+
+          <!-- Dynamic Panel Content -->
+          <div class="min-h-[280px] relative">
+            
+            <!-- Panel: Story -->
+            <div id="tabPanel-story" class="about-tab-panel space-y-6 transition-all duration-350 opacity-100 block">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/25">
+                  <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-display text-white">THE JOURNEY</h3>
+                  <span class="text-xs font-mono uppercase text-slate-500">Cyber-Soft Philosophy</span>
+                </div>
+              </div>
+              <p class="text-slate-300 text-base leading-relaxed font-light">
+                Currently pursuing my Bachelor of Computer Applications (BCA), I am deeply immersed in system structural rules, programming logic, and interactive layout configurations. I believe that high-fidelity logic matches best with visually clean interfaces.
+              </p>
+              <p class="text-slate-400 text-base leading-relaxed font-light">
+                By learning foundational programming methodologies, database normalization tables, and server frameworks, I aim to create user experiences that are highly performant and beautifully organized.
+              </p>
+              <div class="grid sm:grid-cols-2 gap-3.5 pt-4">
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  BCA Scholar - Academic Excellence
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Visual Interaction Electives
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Database Normalization
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Class Project Representative
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel: Focus -->
+            <div id="tabPanel-focus" class="about-tab-panel space-y-6 transition-all duration-350 opacity-0 hidden">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/25">
+                  <i data-lucide="code" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-display text-white">ACADEMIC FOCUS</h3>
+                  <span class="text-xs font-mono uppercase text-slate-500">Technical Specialization</span>
+                </div>
+              </div>
+              <p class="text-slate-300 text-base leading-relaxed font-light">
+                My syllabus program covers relational query compilation, data sorting architectures, object analysis rules, and responsive client interfaces. Outside lectures, I build web models to test optimizations.
+              </p>
+              <p class="text-slate-400 text-base leading-relaxed font-light">
+                Using type-safe states and reusable components, I ensure layouts stay performant across different viewport ranges and speeds.
+              </p>
+              <div class="grid sm:grid-cols-2 gap-3.5 pt-4">
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Structured Query Logic
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Design Variants
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Standard Data Structures
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Component Optimization
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel: Future -->
+            <div id="tabPanel-future" class="about-tab-panel space-y-6 transition-all duration-350 opacity-0 hidden">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/25">
+                  <i data-lucide="award" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-display text-white">FUTURE VISION</h3>
+                  <span class="text-xs font-mono uppercase text-slate-500">Targeting Collaborations</span>
+                </div>
+              </div>
+              <p class="text-slate-300 text-base leading-relaxed font-light">
+                I am highly eager to pursue junior developer internships, open cooperative code setups, or research opportunities. I aim to write production-ready systems alongside experienced engineers.
+              </p>
+              <p class="text-slate-400 text-base leading-relaxed font-light">
+                My long-term aspiration is to build and maintain design languages that are secure, responsive, and available to users globally.
+              </p>
+              <div class="grid sm:grid-cols-2 gap-3.5 pt-4">
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Internship Objectives
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Framework Integration
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Accessibility Focus
+                </div>
+                <div class="flex items-center gap-2.5 font-mono text-xs text-slate-300 border border-white/5 py-2.5 px-3.5 rounded-lg border-l-2 border-l-cyber-purple bg-white/[0.01]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan"></span>
+                  Robust Version Control
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+        TECHNICAL ARSENAL SECTION
+        ========================================== -->
+    <section id="skills" class="relative py-28 px-6 bg-slate-950/40 border-y border-white/5 element-reveal">
+      <div class="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-96 bg-cyber-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto relative z-10">
+        
+        <div class="text-center mb-16">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyber-purple/20 bg-cyber-purple/5 text-cyber-purple text-xs font-semibold tracking-wider font-mono uppercase mb-4">
+            <span class="w-2 h-2 rounded-full bg-cyber-purple animate-pulse"></span> TECHNICAL ARSENAL
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold font-display tracking-tight text-white mb-4">
+            DEVELOPER <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-purple">POWERTRAX</span>
+          </h2>
+          <p class="text-slate-400 text-lg max-w-2xl mx-auto font-light">
+            Interactive tags control block. Filter skill nodes via standard category buttons or activate matrices mode to toggle multiple chips.
+          </p>
+        </div>
+
+        <!-- Filter controls -->
+        <div class="glass-panel border border-white/10 p-5 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-12">
+          <div id="skillsCategoryContainer" class="flex flex-wrap gap-2.5 justify-center md:justify-start">
+            <button data-skill-cat="all" class="skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-gradient-to-r from-cyber-cyan/20 to-cyber-purple/20 border border-cyber-cyan text-cyber-cyan shadow-[0_0_15px_rgba(0,242,255,0.1)] ring-1 ring-cyber-cyan/40">
+              All Stack
+            </button>
+            <button data-skill-cat="frontend" class="skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10">
+              Frontend
+            </button>
+            <button data-skill-cat="backend" class="skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10">
+              Backend
+            </button>
+            <button data-skill-cat="uiux" class="skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10">
+              UI/UX
+            </button>
+            <button data-skill-cat="devops" class="skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10">
+              DevOps
+            </button>
+          </div>
+
+          <!-- View modes toggle -->
+          <div class="flex items-center gap-4">
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider hidden sm:inline">VIEW MODE:</span>
+            <div class="bg-black/40 p-1 rounded-xl flex border border-white/10">
+              <button id="tabModeBtn" class="px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 bg-cyber-purple text-white shadow font-extrabold">
+                <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+                Inspect Tab
+              </button>
+              <button id="matrixModeBtn" class="px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 text-slate-500 hover:text-slate-300">
+                <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                Matrix Grid (<span id="matrixTagCount">11</span>)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MATRIX CHIPS VIEW (Hidden initially) -->
+        <div id="matrixFilterBlock" class="hidden mb-10 bg-slate-950/40 border border-white/5 p-5 rounded-2xl">
+          <h4 class="text-xs font-mono text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyber-purple"></span>
+            Select and intersect specific tag metrics below:
+          </h4>
+          <div id="matrixTagsWrapper" class="flex flex-wrap gap-2">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- TWO COLUMN TAB INSPECTOR PANEL -->
+        <div id="inspectViewContainer" class="grid lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Skills list left -->
+          <div class="lg:col-span-5 space-y-3.5 order-2 lg:order-1">
+            <h3 class="text-[10px] font-mono uppercase tracking-widest text-slate-500 pl-1 mb-4 block">
+              Select key to trigger analysis:
+            </h3>
+            
+            <div id="skillsListing" class="space-y-2.5">
+              <!-- Rendered Dynamically matching SKILLS_DATA -->
+            </div>
+          </div>
+
+          <!-- Selected Skill Inspector display right -->
+          <div class="lg:col-span-7 order-1 lg:order-2">
+            <div id="inspectorDetailsPanel" class="glass-panel border-white/10 p-6 md:p-8 rounded-2xl space-y-6 md:sticky md:top-24 select-none relative overflow-hidden">
+              <!-- Rendered Dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MATRIX SUMMARY METRIC MODAL (Displays when Matrix Mode Active) -->
+        <div id="matrixGridResults" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Rendered dynamically of matching nodes -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+        PROJECTS SECTION WITH TELEMETRY REAL-TIME STREAM
+        ========================================== -->
+    <section id="projects" class="py-28 px-6 max-w-6xl mx-auto relative overflow-hidden element-reveal">
+      <div class="absolute bottom-1/4 -right-10 w-80 h-80 bg-cyber-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 text-cyber-cyan text-xs font-semibold tracking-wider font-mono uppercase mb-4">
+          <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span> SYSTEM BLUEPRINTS
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold font-display tracking-tight text-white mb-4">
+          REPRESENTATIVE <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-cyan-400 to-cyber-purple">WORKS</span>
+        </h2>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto font-light">
+          A collection of system structural layouts designed to resolve academic and web-portal requirements. Toggle the live simulation suite below.
+        </p>
+      </div>
+
+      <!-- Live Telemetry Dashboard Section -->
+      <div class="mb-16 bg-[#0e0e12]/90 border border-white/10 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-3 flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-[#00f2ff] bg-black/40 border-b border-l border-white/10 rounded-bl-xl select-none">
+          <span id="simulatorVisualIcon" class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+          SIM_FEED: <span id="simulatorStatusLabel">STALE</span>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-4 space-y-6">
+            <div class="space-y-2">
+              <span class="text-[10px] font-mono text-cyber-cyan tracking-widest uppercase font-extrabold block">LIVE MONITOR SUITE</span>
+              <h3 class="text-xl font-bold text-white font-display">Neural Interface Simulator</h3>
+              <p class="text-xs text-slate-400 font-light leading-relaxed">
+                Witness real-time rendering. Start the telemetry thread below to query virtual CPU loads, network cycles, and matrix stream records dynamically.
+              </p>
+            </div>
+
+            <!-- Controller buttons -->
+            <div class="flex flex-wrap gap-3 font-mono text-[11px] font-bold">
+              <button id="toggleSimulationBtn" class="flex-1 py-3 px-4 border border-cyber-cyan/30 text-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 transition-colors uppercase flex items-center justify-center gap-2 rounded">
+                <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                <span>START REALT FEED</span>
+              </button>
+              <button id="triggerSpikeBtn" class="py-3 px-4 bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors uppercase rounded flex items-center gap-1.5">
+                <i data-lucide="activity" class="w-3.5 h-3.5 text-red-400 animate-pulse"></i>
+                Spike Test
+              </button>
+            </div>
+
+            <div class="pt-4 border-t border-white/5 flex gap-4 text-center font-mono">
+              <div class="flex-1 p-2.5 rounded bg-black/30 border border-white/5">
+                <div id="simCpuVal" class="text-xl font-bold text-cyber-cyan">--</div>
+                <div class="text-[8px] text-slate-500 uppercase mt-1">CPU Load</div>
+              </div>
+              <div class="flex-1 p-2.5 rounded bg-black/30 border border-white/5">
+                <div id="simMemoryVal" class="text-xl font-bold text-cyber-purple">--</div>
+                <div class="text-[8px] text-slate-500 uppercase mt-1">Memory %</div>
+              </div>
+              <div class="flex-1 p-2.5 rounded bg-black/30 border border-white/5">
+                <div id="simNetworkVal" class="text-xl font-bold text-teal-400">--</div>
+                <div class="text-[8px] text-slate-500 uppercase mt-1">Streams KB</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live graph and Logs stream -->
+          <div class="lg:col-span-8 space-y-4">
+            <div class="w-full h-48 rounded bg-black/40 border border-white/5 p-4 relative flex items-center justify-center" style="min-height: 200px">
+              <div id="telemetryChartFiller" class="absolute inset-0 flex flex-col items-center justify-center text-center font-mono text-xs text-slate-500 select-none bg-black/25">
+                <i data-lucide="help-circle" class="w-7 h-7 mb-2 text-cyber-cyan/60 animate-pulse"></i>
+                Telemetry stream paused.<br/>Click "START REALT FEED" to feed virtual telemetry curves.
+              </div>
+              <canvas id="telemetryChart" class="w-full h-full block hidden" style="max-height: 180px"></canvas>
+            </div>
+
+            <!-- Logger panel at bottom -->
+            <div class="p-3 bg-black/60 rounded border border-white/5 font-mono text-[10px] space-y-1 overflow-y-auto h-24 text-slate-450" id="simLogs">
+              <div class="text-slate-500">[System] Visual hardware logs pipeline initialized. Waiting for stream connection...</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Static Projects Showcase Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Project Card 1 -->
+        <div class="glass-panel border-white/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-cyber-cyan/30 transition-all duration-300 group">
+          <div class="aspect-[16/9] w-full overflow-hidden bg-slate-900 relative">
+            <img src="https://picsum.photos/seed/dashboard/800/450" alt="Neural Interface" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 opacity-80" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/20 rounded px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-widest">
+              WEB DEV
+            </div>
+          </div>
+          <div class="p-6 space-y-4 flex-1">
+            <h3 class="text-lg font-bold font-display text-white group-hover:text-cyber-cyan transition-colors">Neural Interface Dashboard</h3>
+            <p class="text-xs text-slate-400 font-light leading-relaxed">
+              A high-performance live telemetry dashboard for tracking real-time server metrics and resource distribution loops.
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">React.js</span>
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">Recharts</span>
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">Tailwind</span>
+            </div>
+          </div>
+          <div class="px-6 py-4 bg-white/[0.01] border-t border-white/5 flex justify-between items-center text-[10px] font-mono">
+            <div class="flex items-center gap-1.5 text-slate-500">
+              <i data-lucide="activity" class="w-3.5 h-3.5 text-cyber-cyan"></i> Latency: 2.4ms
+            </div>
+            <a href="#projects" onclick="alert('Mock Sandbox Link: Dashboard simulation active directly in the project header section above!')" class="text-cyber-cyan hover:underline flex items-center gap-1">
+              DEMO LIVE <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="glass-panel border-white/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-cyber-cyan/30 transition-all duration-300 group">
+          <div class="aspect-[16/9] w-full overflow-hidden bg-slate-900 relative">
+            <img src="https://picsum.photos/seed/wallet/800/450" alt="Cyber soft wallet" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 opacity-80" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/20 rounded px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-widest">
+              MOBILE
+            </div>
+          </div>
+          <div class="p-6 space-y-4 flex-1">
+            <h3 class="text-lg font-bold font-display text-white group-hover:text-cyber-cyan transition-colors">Cyber-Soft Wallet Mobile</h3>
+            <p class="text-xs text-slate-400 font-light leading-relaxed">
+              A lightweight mobile wallet container displaying custom crypto portfolios with soft light glow accents.
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">TypeScript</span>
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">Tailwind</span>
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">Framer</span>
+            </div>
+          </div>
+          <div class="px-6 py-4 bg-white/[0.01] border-t border-white/5 flex justify-between items-center text-[10px] font-mono">
+            <div class="flex items-center gap-1.5 text-slate-500">
+              <i data-lucide="award" class="w-3.5 h-3.5 text-cyber-cyan"></i> Class Project
+            </div>
+            <a href="#projects" onclick="alert('Wallet mock demo: Ported visually directly inside our unified matrix framework!')" class="text-cyber-cyan hover:underline flex items-center gap-1">
+              DEMO LIVE <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="glass-panel border-white/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-cyber-cyan/30 transition-all duration-300 group">
+          <div class="aspect-[16/9] w-full overflow-hidden bg-slate-900 relative">
+            <img src="https://picsum.photos/seed/portal/800/450" alt="Academic Synergy" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 opacity-80" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-cyber-purple/15 text-cyber-purple border border-cyber-purple/20 rounded px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-widest">
+              SYSTEM
+            </div>
+          </div>
+          <div class="p-6 space-y-4 flex-1">
+            <h3 class="text-lg font-bold font-display text-white group-hover:text-cyber-cyan transition-colors">Academic Synergy Portal</h3>
+            <p class="text-xs text-slate-400 font-light leading-relaxed">
+              A structured secure storage portal designed for peer BCA classrooms to review resources, organize labs, and log tasks.
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">Node.js</span>
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">Express</span>
+              <span class="text-[9px] font-mono bg-white/[0.02] border border-white/5 py-1 px-2 text-slate-350 rounded">SQL API</span>
+            </div>
+          </div>
+          <div class="px-6 py-4 bg-white/[0.01] border-t border-white/5 flex justify-between items-center text-[10px] font-mono">
+            <div class="flex items-center gap-1.5 text-slate-500">
+              <i data-lucide="users" class="w-3.5 h-3.5 text-cyber-purple"></i> Class Users: 140+
+            </div>
+            <a href="#projects" onclick="alert('Mock Sandbox Link: Portal server active on remote node framework.')" class="text-cyber-cyan hover:underline flex items-center gap-1">
+              DEMO LIVE <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+        CONTACT CONSOLE SECTION
+        ========================================== -->
+    <section id="contact" class="py-28 px-6 bg-[#070709] border-t border-white/5 relative overflow-hidden element-reveal">
+      <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 bg-cyber-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto relative z-10">
+        
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Title Blurb Left -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyber-purple/20 bg-cyber-purple/5 text-cyber-purple text-xs font-semibold tracking-wider font-mono uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyber-purple"></span> GREETINGS
+            </div>
+            <h2 class="text-4xl font-extrabold font-display text-white tracking-tight leading-tight">
+              INITIATE A <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-purple">PING CONSOLE</span>
+            </h2>
+            <p class="text-slate-400 text-sm leading-relaxed font-light">
+              Submit your inquiry parameters directly into the database simulation loop. Let's build cohesive models or optimize classroom system indexes.
+            </p>
+
+            <div class="space-y-4 font-mono text-xs text-slate-350 pt-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded bg-white/5 border border-white/5 text-cyber-cyan">
+                  <i data-lucide="terminal" class="w-4 h-4"></i>
+                </div>
+                <span>Terminal Node: <span class="text-white font-bold select-all">maha@bca.scholar.net</span></span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded bg-white/5 border border-white/5 text-cyber-purple">
+                  <i data-lucide="shield" class="w-4 h-4"></i>
+                </div>
+                <span>Encrypted: SSL / API Verification Secure</span>
+              </div>
+            </div>
+
+            <!-- Social connectors -->
+            <div class="flex gap-4 pt-4">
+              <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-cyber-cyan/15 text-slate-400 hover:text-cyber-cyan border border-white/5 hover:border-cyber-cyan/30 transition-all">
+                <i data-lucide="github" class="w-4 h-4"></i>
+              </a>
+              <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-cyber-cyan/15 text-slate-400 hover:text-cyber-cyan border border-white/5 hover:border-cyber-cyan/30 transition-all">
+                <i data-lucide="linkedin" class="w-4 h-4"></i>
+              </a>
+              <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-cyber-purple/15 text-slate-400 hover:text-cyber-purple border border-white/5 hover:border-cyber-purple/30 transition-all">
+                <i data-lucide="twitter" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Sandbox Form Right -->
+          <div class="lg:col-span-7">
+            <div class="glass-panel border-white/10 rounded-2xl p-6 md:p-8 relative">
+              <form id="contactForm" class="space-y-5">
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-[10px] font-mono text-slate-400 tracking-wider uppercase mb-1.5">IDENTIFIER / NAME</label>
+                    <input id="contactName" type="text" placeholder="e.g. Inspector" required class="w-full px-4 py-3 bg-black/40 border border-white/10 text-white rounded focus:outline-none focus:border-cyber-cyan transition-colors text-sm font-mono" />
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-mono text-slate-400 tracking-wider uppercase mb-1.5">RETURN GATEWAY / EMAIL</label>
+                    <input id="contactEmail" type="email" placeholder="e.g. gateway@server.com" required class="w-full px-4 py-3 bg-black/40 border border-white/10 text-white rounded focus:outline-none focus:border-cyber-cyan transition-colors text-sm font-mono" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-[10px] font-mono text-slate-400 tracking-wider uppercase mb-1.5">TRANSMISSION BODY MESSAGE</label>
+                  <textarea id="contactMessage" placeholder="Express your collaboration rules..." rows="4" required class="w-full px-4 py-3 bg-black/40 border border-white/10 text-white rounded focus:outline-none focus:border-cyber-cyan transition-colors text-sm font-mono"></textarea>
+                </div>
+
+                <button id="submitFormBtn" type="submit" class="w-full py-4 bg-cyber-purple hover:bg-cyber-cyan text-white hover:text-black font-extrabold text-xs tracking-widest font-mono uppercase transition-all duration-300 rounded shadow-[0_4px_20px_rgba(188,19,254,0.25)] flex items-center justify-center gap-2">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  SUBMIT SECURE PACKET
+                </button>
+              </form>
+
+              <!-- Success alert overlay -->
+              <div id="formSuccessAlert" class="absolute inset-0 bg-[#070709]/95 flex flex-col items-center justify-center text-center p-6 rounded-2xl transition-opacity duration-300 opacity-0 pointer-events-none">
+                <div class="w-16 h-16 bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/30 rounded-full flex items-center justify-center mb-4 text-3xl">
+                  ✓
+                </div>
+                <h3 class="text-xl font-bold font-display text-white mb-2">Transmission Transmitted!</h3>
+                <p class="text-xs text-slate-400 font-mono leading-relaxed max-w-sm">
+                  Packet compiled successfully. An audit reference block has been appended automatically in the telemetry records database panel below.
+                </p>
+                <button id="resetFormBtn" class="mt-6 px-5 py-2.5 border border-white/10 hover:border-cyber-cyan text-xs text-slate-400 hover:text-white font-mono uppercase transition-colors rounded">
+                  Send Another
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Submission Audit Console Panel -->
+        <div class="mt-12 p-5 bg-black/70 border border-white/5 rounded-2xl">
+          <div class="flex items-center gap-2 mb-4 font-mono text-slate-450 text-xs">
+            <span class="glow-dot animate-ping"></span>
+            <span>TRANSMISSIONS AUDIT MODULE (<span id="submissionsRecordCount">0</span> active logs)</span>
+          </div>
+          <div class="space-y-2 max-h-40 overflow-y-auto" id="submissionsRecordLogs">
+            <div id="noSubmissionsLabel" class="text-center py-6 text-slate-600 font-mono text-[10px] uppercase tracking-widest">
+              [ STALE CONSOLE STATE - NO AUDIT LOG RECORD FOUND ]
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+        FOOTER TERMINAL MODULE
+        ========================================== -->
+    <footer class="py-12 px-6 border-t border-white/5 bg-black text-slate-500 font-mono text-xs">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left select-none">
+        
+        <div>
+          <div class="font-extrabold text-white text-sm font-display mb-1 flex items-center justify-center md:justify-start gap-1.5">
+            <i data-lucide="code-2" class="w-4 h-4 text-cyber-cyan"></i>
+            MAHA PORTFOLIO v2
+          </div>
+          <p class="text-[10px] text-slate-600 uppercase tracking-wider">
+            Bachelor of Computer Applications System Core
+          </p>
+        </div>
+
+        <div class="text-[10px] text-slate-600 uppercase max-w-sm leading-relaxed">
+          Designed with high-contrast tactical black twilight backgrounds and active virtual telemetry charts. Ported completely as a single self-contained html package.
+        </div>
+
+        <div>
+          &copy; 2026. Custom layout assets reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==========================================
+        CORE INTERACTION JAVASCRIPT LOGIC
+        ========================================== -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="text/javascript">
+      // ==========================================
+      // HARDCODED APPLICATION DATASETS
+      // ==========================================
+      const SKILLS_DATA = [
+        {
+          id: 'f1',
+          name: 'React.js',
+          category: 'frontend',
+          level: 88,
+          description: 'Advanced declarative UI building, standard hooks, custom state streams, and render path optimization.',
+          tags: ['Hooks', 'Context API', 'Vite', 'React Router'],
+          familiarity: 'Advanced',
+          experienceYears: '1.5+ Years',
+          projectsCount: 4
+        },
+        {
+          id: 'f2',
+          name: 'Tailwind CSS',
+          category: 'frontend',
+          level: 95,
+          description: 'Expert-level design architectures with Tailwind. Custom viewport extensions, responsive flex grid alignments, and utility tuning.',
+          tags: ['Arbitrary Values', 'Flexbox/Grid', 'Responsive Layout', 'Animation'],
+          familiarity: 'Expert',
+          experienceYears: '2+ Years',
+          projectsCount: 8
+        },
+        {
+          id: 'f3',
+          name: 'TypeScript',
+          category: 'frontend',
+          level: 80,
+          description: 'Strict typing structures, complex interface configurations, utility operators, and modular code guidelines.',
+          tags: ['Generics', 'Type Guards', 'Utility Models', 'Typesafety'],
+          familiarity: 'Advanced',
+          experienceYears: '1 Year',
+          projectsCount: 3
+        },
+        {
+          id: 'f4',
+          name: 'HTML5 & CSS3',
+          category: 'frontend',
+          level: 92,
+          description: 'Semantic tags, document object models, CSS Keyframes animation frameworks, and accessible document hierarchy.',
+          tags: ['Semantic markup', 'CSS Grid', 'Variables', 'Transitions'],
+          familiarity: 'Expert',
+          experienceYears: '3 Years',
+          projectsCount: 12
+        },
+        {
+          id: 'b1',
+          name: 'Node.js & Express',
+          category: 'backend',
+          level: 85,
+          description: 'Asynchronous middleware pipeline management, REST API route designs, and local service integrations.',
+          tags: ['REST Route', 'Express API', 'JSON Web Token', 'File System'],
+          familiarity: 'Advanced',
+          experienceYears: '1.5 Years',
+          projectsCount: 5
+        },
+        {
+          id: 'b2',
+          name: 'Python',
+          category: 'backend',
+          level: 78,
+          description: 'Structured script automation, basic backends, functional algorithmic programs, and data compilation schemas.',
+          tags: ['Flask', 'FastAPI', 'Pandas', 'Scripting'],
+          familiarity: 'Advanced',
+          experienceYears: '2 Years',
+          projectsCount: 3
+        },
+        {
+          id: 'b3',
+          name: 'SQL Databases',
+          category: 'backend',
+          level: 82,
+          description: 'Relational database architecture planning, optimized multi-table JOIN metrics, index creation, and transaction safety.',
+          tags: ['MySQL', 'Postgres', 'JOIN Joins', 'Indexing'],
+          familiarity: 'Advanced',
+          experienceYears: '1 Year',
+          projectsCount: 4
+        },
+        {
+          id: 'u1',
+          name: 'Figma',
+          category: 'uiux',
+          level: 87,
+          description: 'Fidelity viewport prototypes, design system standards, component variations, and user experience outline systems.',
+          tags: ['Auto Layout', 'Prototypes', 'Variants', 'Vector Assets'],
+          familiarity: 'Advanced',
+          experienceYears: '1.5 Years',
+          projectsCount: 6
+        },
+        {
+          id: 'u2',
+          name: 'Interactive Code',
+          category: 'uiux',
+          level: 85,
+          description: 'Bringing visual environments to life with custom motion physics, micro-animations, and interactive typography maps.',
+          tags: ['Framer Motion', 'Canvas drawings', 'Web Animations', 'SVG paths'],
+          familiarity: 'Advanced',
+          experienceYears: '1 Year',
+          projectsCount: 3
+        },
+        {
+          id: 'd1',
+          name: 'Git & GitHub',
+          category: 'devops',
+          level: 90,
+          description: 'Secure repository version management, branch orchestration, code reviews, and basic build actions script setups.',
+          tags: ['Gitflow', 'Rebase model', 'Pull requests', 'Actions integration'],
+          familiarity: 'Expert',
+          experienceYears: '3 Years',
+          projectsCount: 15
+        },
+        {
+          id: 'd2',
+          name: 'Docker',
+          category: 'devops',
+          level: 70,
+          description: 'Container build structures, port redirection parameters, and simple reproducible developer environment definitions.',
+          tags: ['Images', 'Dockerfiles', 'Compose profiles', 'Volumes'],
+          familiarity: 'Intermediate',
+          experienceYears: '0.5 Years',
+          projectsCount: 2
+        }
+      ];
+
+      // ==========================================
+      // STATE MANAGEMENT variables
+      // ==========================================
+      let activeCategory = 'all';
+      let selectedSkillId = 'f1';
+      let skillViewMode = 'inspect'; // 'inspect' | 'matrix'
+      let activeSkillTags = [];
+
+      // ==========================================
+      // SPOTLIGHT CURSOR GLOW EVENT
+      // ==========================================
+      const cursorGlow = document.getElementById('cursorGlow');
+      document.addEventListener('mousemove', (e) => {
+        cursorGlow.style.left = `${e.clientX}px`;
+        cursorGlow.style.top = `${e.clientY}px`;
+      });
+
+      // ==========================================
+      // SCROLL REVEAL & METERS
+      // ==========================================
+      const scrollProgress = document.getElementById('scrollProgress');
+      const navbar = document.getElementById('navbar');
+
+      function updateScrollMeters() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        scrollProgress.style.width = `${scrollPercent}%`;
+
+        if (scrollTop > 40) {
+          navbar.classList.add('glass-panel', 'bg-[#0a0a0c]/85', 'border-white/10', 'py-3.5', 'shadow-lg');
+          navbar.classList.remove('border-transparent', 'py-5');
+        } else {
+          navbar.classList.remove('glass-panel', 'bg-[#0a0a0c]/85', 'border-white/10', 'py-3.5', 'shadow-lg');
+          navbar.classList.add('border-transparent', 'py-5');
+        }
+
+        // Active scroll section highlighter
+        const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        let currentSectionId = 'home';
+        for (const section of sections) {
+          const el = document.getElementById(section);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= 180 && rect.bottom >= 180) {
+              currentSectionId = section;
+              break;
+            }
+          }
+        }
+
+        navItems.forEach(item => {
+          const hrefTab = item.getAttribute('href').replace('#', '');
+          if (hrefTab === currentSectionId) {
+            item.classList.add('text-cyber-cyan');
+            item.classList.remove('text-slate-400');
+          } else {
+            item.classList.remove('text-cyber-cyan');
+            item.classList.add('text-slate-400');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateScrollMeters);
+      updateScrollMeters();
+
+      // Intersection Observer revealing
+      const revealElements = document.querySelectorAll('.element-reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      revealElements.forEach(el => observer.observe(el));
+
+      // ==========================================
+      // MOBILE MENUS DRAWER ACTION
+      // ==========================================
+      const mobileDrawer = document.getElementById('mobileDrawer');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+      const drawerBackdrop = document.getElementById('drawerBackdrop');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+      function openMobileMenu() {
+        mobileDrawer.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
+
+      function closeMobileMenu() {
+        mobileDrawer.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      mobileMenuBtn.addEventListener('click', openMobileMenu);
+      closeDrawerBtn.addEventListener('click', closeMobileMenu);
+      drawerBackdrop.addEventListener('click', closeMobileMenu);
+      mobileNavLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+
+      // ==========================================
+      // ABOUT SECTION STORIES TABS SWAPPING
+      // ==========================================
+      const aboutTabBtns = document.querySelectorAll('.about-tab-btn');
+      const aboutTabPanels = document.querySelectorAll('.about-tab-panel');
+
+      aboutTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.getAttribute('data-about-tab');
+          
+          aboutTabBtns.forEach(b => {
+             b.className = "about-tab-btn flex-1 py-3.5 text-xs font-mono uppercase font-bold tracking-wider rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200";
+          });
+          btn.className = "about-tab-btn flex-1 py-3.5 text-xs font-mono uppercase font-bold tracking-wider rounded-lg transition-all duration-300 bg-gradient-to-r from-cyber-cyan/15 to-cyber-purple/15 border border-cyber-cyan/25 text-white font-extrabold shadow-sm";
+
+          aboutTabPanels.forEach(panel => {
+            panel.classList.add('opacity-0', 'hidden');
+            panel.classList.remove('opacity-100', 'block');
+          });
+
+          const currentPanel = document.getElementById(`tabPanel-${targetTab}`);
+          if (currentPanel) {
+            currentPanel.classList.remove('hidden');
+            setTimeout(() => {
+              currentPanel.classList.add('opacity-100', 'block');
+              currentPanel.classList.remove('opacity-0');
+            }, 50);
+          }
+        });
+      });
+
+      // ==========================================
+      // SKILLS ARSENAL RENDERING LOGIC
+      // ==========================================
+      const skillsListing = document.getElementById('skillsListing');
+      const inspectorDetailsPanel = document.getElementById('inspectorDetailsPanel');
+      const matrixTagsWrapper = document.getElementById('matrixTagsWrapper');
+      const skillCatBtns = document.querySelectorAll('.skill-cat-btn');
+
+      // Helper to compute available tags for current filter
+      function getAllAvailableTagsForFilters() {
+        const uniqueTags = new Set();
+        SKILLS_DATA.forEach(s => {
+          if (activeCategory === 'all' || s.category === activeCategory) {
+            s.tags.forEach(t => uniqueTags.add(t));
+          }
+        });
+        return Array.from(uniqueTags);
+      }
+
+      // Render Matrix Filter tags
+      function renderMatrixTagsBlock() {
+        const availableTags = getAllAvailableTagsForFilters();
+        document.getElementById('matrixTagCount').innerText = availableTags.length;
+
+        matrixTagsWrapper.innerHTML = availableTags.map(tag => {
+          const isSelected = activeSkillTags.includes(tag);
+          return `
+            <button onclick="toggleMatrixTagFilter('${tag}')" class="px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150 flex items-center gap-1.5 border border-white/5 ${
+              isSelected
+                ? 'bg-cyber-cyan/20 border-cyber-cyan text-cyber-cyan'
+                : 'bg-white/5 text-slate-400 hover:border-slate-500'
+            }">
+              <span class="text-[10px]">${isSelected ? '✓' : '+'}</span>
+              ${tag}
+            </button>
+          `;
+        }).join('');
+
+        if (activeSkillTags.length > 0) {
+          matrixTagsWrapper.innerHTML += `
+            <button onclick="resetMatrixFilters()" class="px-3 py-1.5 rounded-lg text-xs font-mono border border-red-500/35 text-red-400 bg-red-950/10 hover:bg-red-900/20">
+              Reset Grid
+            </button>
+          `;
+        }
+      }
+
+      window.toggleMatrixTagFilter = function(tag) {
+        if (activeSkillTags.includes(tag)) {
+          activeSkillTags = activeSkillTags.filter(t => t !== tag);
+        } else {
+          activeSkillTags.push(tag);
+        }
+        renderMatrixTagsBlock();
+        refreshSkillsDisplay();
+      }
+
+      window.resetMatrixFilters = function() {
+        activeSkillTags = [];
+        renderMatrixTagsBlock();
+        refreshSkillsDisplay();
+      }
+
+      // Render skills as tabs (on the left)
+      function refreshSkillsDisplay() {
+        // Filter skills
+        const filtered = SKILLS_DATA.filter(skill => {
+          const categoryMatches = activeCategory === 'all' || skill.category === activeCategory;
+          const tagsMatches = activeSkillTags.length === 0 || skill.tags.some(t => activeSkillTags.includes(t));
+          return categoryMatches && tagsMatches;
+        });
+
+        if (skillViewMode === 'matrix') {
+          // Render results directly in Matrix result grid, hiding inspector
+          document.getElementById('inspectViewContainer').classList.add('hidden');
+          document.getElementById('matrixGridResults').classList.remove('hidden');
+
+          const matrixGridResults = document.getElementById('matrixGridResults');
+          if (filtered.length === 0) {
+            matrixGridResults.innerHTML = `
+              <div class="col-span-full py-12 text-center text-slate-500 font-mono text-xs uppercase tracking-wider">
+                No matching skills found in matrix intersections.
+              </div>
+            `;
+          } else {
+            matrixGridResults.innerHTML = filtered.map(s => `
+              <div onclick="switchSkillAndActivateInspect('${s.id}')" class="glass-panel border-white/5 p-5 rounded-xl hover:border-cyber-cyan/30 cursor-pointer transition-all duration-200 divide-y divide-white/5 space-y-3.5 select-none hover:-translate-y-0.5">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div class="p-1.5 rounded bg-white/5 border border-white/5 text-cyber-cyan">
+                      <i data-lucide="${getSkillNodeIcon(s.id)}" class="w-4 h-4"></i>
+                    </div>
+                    <span class="text-sm font-bold text-white font-display">${s.name}</span>
+                  </div>
+                  <span class="text-[10px] font-mono font-bold text-cyber-cyan">${s.familiarity}</span>
+                </div>
+                <div class="pt-3 text-[11px] text-slate-400 font-light leading-relaxed mb-3">
+                  ${s.description}
+                </div>
+                <!-- Mini Progress -->
+                <div class="pt-3">
+                  <div class="flex justify-between text-[8px] font-mono text-slate-500 mb-1">
+                    <span>INDEX LEVEL</span>
+                    <span>${s.level}%</span>
+                  </div>
+                  <div class="w-full bg-white/5 h-1 rounded overflow-hidden">
+                    <div class="bg-gradient-to-r from-cyber-cyan to-cyber-purple h-full" style="width: ${s.level}%"></div>
+                  </div>
+                </div>
+              </div>
+            `).join('');
+            lucide.createIcons();
+          }
+        } else {
+          // Standard Inspect Tab view mode
+          document.getElementById('inspectViewContainer').classList.remove('hidden');
+          document.getElementById('matrixGridResults').classList.add('hidden');
+
+          if (filtered.length === 0) {
+            skillsListing.innerHTML = `
+              <div class="py-8 text-center text-slate-500 font-mono text-[10px] uppercase tracking-widest">
+                No matching skills.
+              </div>
+            `;
+            inspectorDetailsPanel.innerHTML = `
+              <div class="text-center py-12 text-slate-600 font-mono text-xs">
+                [ EMPTY ARSENAL PANEL ]
+              </div>
+            `;
+            return;
+          }
+
+          // If current selection is outside list, pick first matching
+          if (!filtered.some(s => s.id === selectedSkillId)) {
+            selectedSkillId = filtered[0].id;
+          }
+
+          skillsListing.innerHTML = filtered.map(s => {
+            const isActive = s.id === selectedSkillId;
+            return `
+              <button onclick="setSelectedSkillId('${s.id}')" class="w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-center justify-between group ${
+                isActive
+                  ? 'bg-gradient-to-r from-slate-900 to-[#101014] border-cyber-cyan/60 shadow-[0_0_15px_rgba(0,242,255,0.04)]'
+                  : 'bg-white/[0.02] border-white/5 hover:border-white/10'
+              }">
+                <div class="flex items-center gap-3">
+                  <div class="p-2.5 rounded-lg border transition-colors ${
+                    isActive ? 'bg-cyber-cyan/10 border-cyber-cyan/35 text-cyber-cyan' : 'bg-white/5 border-white/5 text-slate-400 group-hover:text-amber-50'
+                  }">
+                    <i data-lucide="${getSkillNodeIcon(s.id)}" class="w-4.5 h-4.5"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-white font-display mb-0.5">${s.name}</h4>
+                    <span class="text-[9px] font-mono text-slate-500 tracking-wider uppercase">${s.category}</span>
+                  </div>
+                </div>
+                <div class="text-right flex items-center gap-2">
+                  <span class="text-[10px] font-mono font-bold text-slate-400 group-hover:text-cyber-cyan transition-colors">${s.level}%</span>
+                  <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600 group-hover:translate-x-0.5 transition-transform"></i>
+                </div>
+              </button>
+            `;
+          }).join('');
+
+          // Render inspector panel details
+          const currentSkill = SKILLS_DATA.find(s => s.id === selectedSkillId);
+          if (currentSkill) {
+            inspectorDetailsPanel.innerHTML = `
+              <!-- Header -->
+              <div class="flex justify-between items-start border-b border-white/5 pb-5">
+                <div class="flex items-center gap-3.5">
+                  <div class="p-3.5 rounded-xl bg-cyber-purple/15 text-[#bc13fe] border border-cyber-purple/25">
+                    <i data-lucide="${getSkillNodeIcon(currentSkill.id)}" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-extrabold text-white font-display">${currentSkill.name}</h3>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-[#bc13fe] flex items-center gap-1.5 mt-0.5">
+                      <span class="glow-dot"></span> Core System Node
+                    </span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="text-2xl font-extrabold text-cyber-cyan font-mono">${currentSkill.level}%</div>
+                  <span class="text-[9px] font-mono uppercase text-slate-500">INDEX METRIC</span>
+                </div>
+              </div>
+
+              <!-- Metrics description -->
+              <div class="space-y-4">
+                <h4 class="text-[10px] font-mono uppercase tracking-widest text-slate-500">Blurb telemetry</h4>
+                <p class="text-slate-300 text-sm leading-relaxed font-light">
+                  ${currentSkill.description}
+                </p>
+              </div>
+
+              <!-- Matrix levels -->
+              <div class="grid grid-cols-2 gap-4 border-y border-white/5 py-5 text-center font-mono">
+                <div>
+                  <div class="text-sm font-bold text-white">${currentSkill.familiarity}</div>
+                  <span class="text-[8px] text-slate-500 uppercase tracking-widest">Familiarity</span>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-white">${currentSkill.experienceYears}</div>
+                  <span class="text-[8px] text-slate-500 uppercase tracking-widest">Experience</span>
+                </div>
+              </div>
+
+              <!-- Core tags -->
+              <div class="space-y-3">
+                <h4 class="text-[10px] font-mono uppercase tracking-widest text-slate-500">Sub-parameters</h4>
+                <div class="flex flex-wrap gap-2">
+                  ${currentSkill.tags.map(t => `
+                    <span class="px-2.5 py-1.5 rounded-md text-[10px] font-mono bg-white/[0.02] text-slate-300 border border-white/5 block">
+                      ${t}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Virtual telemetry node border graphics -->
+              <div class="absolute bottom-1 right-2 p-1 font-mono text-[8px] text-slate-700 uppercase tracking-widest">
+                G_NET // ${currentSkill.id}.SYS
+              </div>
+            `;
+          }
+          lucide.createIcons();
+        }
+      }
+
+      window.setSelectedSkillId = function(id) {
+        selectedSkillId = id;
+        refreshSkillsDisplay();
+      }
+
+      window.switchSkillAndActivateInspect = function(id) {
+        selectedSkillId = id;
+        skillViewMode = 'inspect';
+        
+        // Toggle viewmode UI active style
+        document.getElementById('inspectViewContainer').classList.remove('hidden');
+        document.getElementById('matrixGridResults').classList.add('hidden');
+        document.getElementById('matrixFilterBlock').classList.add('hidden');
+        
+        document.getElementById('tabModeBtn').className = "px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 bg-cyber-purple text-white shadow font-extrabold";
+        document.getElementById('matrixModeBtn').className = "px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 text-slate-500 hover:text-slate-300";
+
+        refreshSkillsDisplay();
+      }
+
+      // Helper helper to get Lucide icons for skill nodes
+      function getSkillNodeIcon(id) {
+        switch (id) {
+          case 'f1': return 'code-2';
+          case 'f2': return 'palette';
+          case 'f3': return 'shield';
+          case 'f4': return 'globe';
+          case 'b1': return 'server';
+          case 'b2': return 'cpu';
+          case 'b3': return 'database';
+          case 'u1': return 'framer';
+          case 'u2': return 'sparkles';
+          case 'd1': return 'git-branch';
+          default: return 'terminal';
+        }
+      }
+
+      // Interactive categories filters
+      skillCatBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const category = btn.getAttribute('data-skill-cat');
+          activeCategory = category;
+          activeSkillTags = []; // Reset tags
+
+          skillCatBtns.forEach(b => {
+            b.className = "skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10";
+          });
+          btn.className = "skill-cat-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider font-mono rounded-lg transition-all duration-300 bg-gradient-to-r from-cyber-cyan/20 to-cyber-purple/20 border border-cyber-cyan text-cyber-cyan shadow-[0_0_15px_rgba(0,242,255,0.1)] ring-1 ring-cyber-cyan/40";
+
+          // If matrix mode is active, update matrix chips
+          renderMatrixTagsBlock();
+          refreshSkillsDisplay();
+        });
+      });
+
+      // View mode buttons handler
+      document.getElementById('tabModeBtn').addEventListener('click', () => {
+        skillViewMode = 'inspect';
+        document.getElementById('tabModeBtn').className = "px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 bg-cyber-purple text-white shadow font-extrabold";
+        document.getElementById('matrixModeBtn').className = "px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 text-slate-500 hover:text-slate-300";
+        document.getElementById('matrixFilterBlock').classList.add('hidden');
+        refreshSkillsDisplay();
+      });
+
+      document.getElementById('matrixModeBtn').addEventListener('click', () => {
+        skillViewMode = 'matrix';
+        document.getElementById('matrixModeBtn').className = "px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 bg-cyber-cyan text-black font-extrabold shadow-[0_0_10px_rgba(0,242,255,0.25)]";
+        document.getElementById('tabModeBtn').className = "px-3 py-2 rounded-lg text-xs font-mono transition-all duration-200 flex items-center gap-2 text-slate-500 hover:text-slate-300";
+        document.getElementById('matrixFilterBlock').classList.remove('hidden');
+        renderMatrixTagsBlock();
+        refreshSkillsDisplay();
+      });
+
+      // Init rendering of skills list
+      refreshSkillsDisplay();
+
+      // ==========================================
+      // REAL-TIME STREAM SIMULATOR DASHBOARD (CHART.JS)
+      // ==========================================
+      const toggleSimulationBtn = document.getElementById('toggleSimulationBtn');
+      const triggerSpikeBtn = document.getElementById('triggerSpikeBtn');
+      const simCpuVal = document.getElementById('simCpuVal');
+      const simMemoryVal = document.getElementById('simMemoryVal');
+      const simNetworkVal = document.getElementById('simNetworkVal');
+      const telemetryChartCanvas = document.getElementById('telemetryChart');
+      const telemetryChartFiller = document.getElementById('telemetryChartFiller');
+      const simLogs = document.getElementById('simLogs');
+      const simulatorVisualIcon = document.getElementById('simulatorVisualIcon');
+      const simulatorStatusLabel = document.getElementById('simulatorStatusLabel');
+
+      let simulationRunning = false;
+      let simulationIntervalSpeed = 1000;
+      let streamInterval = null;
+      let myChart = null;
+
+      // Queue of historical records (size: 12)
+      let timeLabels = Array.from({length: 12}, (_, idx) => `${12 - idx}s ago`);
+      let cpuData = Array.from({length: 12}, () => Math.floor(Math.random() * 25) + 15);
+      let memoryData = Array.from({length: 12}, () => Math.floor(Math.random() * 8) + 52);
+      let networkData = Array.from({length: 12}, () => Math.floor(Math.random() * 100) + 110);
+
+      function logTelemetryMessage(status, msg) {
+        const timeStr = new Date().toLocaleTimeString([], { hour12: false });
+        let logClass = "text-slate-500";
+        if (status === 'WARN') logClass = "text-yellow-400";
+        if (status === 'SYS') logClass = "text-cyber-cyan";
+        if (status === 'OK') logClass = "text-green-400 font-medium";
+
+        simLogs.innerHTML = `<div class="${logClass}">[${timeStr}] [${status}] ${msg}</div>` + simLogs.innerHTML;
+        // Truncate logs
+        if (simLogs.children.length > 20) {
+          simLogs.removeChild(simLogs.lastChild);
+        }
+      }
+
+      function initTelemetryChart() {
+        const ctx = telemetryChartCanvas.getContext('2d');
+        myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: timeLabels,
+            datasets: [
+              {
+                label: 'CPU Core Load %',
+                data: cpuData,
+                borderColor: '#00f2ff',
+                backgroundColor: 'rgba(0, 242, 255, 0.05)',
+                borderWidth: 2,
+                tension: 0.35,
+                fill: true
+              },
+              {
+                label: 'Virtual Memory Usage %',
+                data: memoryData,
+                borderColor: '#bc13fe',
+                backgroundColor: 'rgba(188, 19, 254, 0.05)',
+                borderWidth: 2,
+                tension: 0.35,
+                fill: true
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                titleFont: { family: 'JetBrains Mono', size: 10 },
+                bodyFont: { family: 'JetBrains Mono', size: 10 }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { color: 'rgba(255, 255, 255, 0.3)', font: { family: 'JetBrains Mono', size: 8 } }
+              },
+              y: {
+                min: 0,
+                max: 100,
+                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                ticks: { color: 'rgba(255, 255, 255, 0.3)', font: { family: 'JetBrains Mono', size: 8 } }
+              }
+            }
+          }
+        });
+      }
+
+      function updateDashboardNumbers(cpu, mem, net) {
+        simCpuVal.innerText = `${cpu}%`;
+        simMemoryVal.innerText = `${mem}%`;
+        simNetworkVal.innerText = `${net} KB`;
+      }
+
+      function handleNextSimulationTick() {
+        const lastCpu = cpuData[cpuData.length - 1];
+        const lastMemory = memoryData[memoryData.length - 1];
+        const lastNetwork = networkData[networkData.length - 1];
+
+        // Normal path random walks
+        const driftCpu = Math.min(100, Math.max(8, Math.floor(lastCpu + (Math.random() * 16 - 8))));
+        const driftMemory = Math.min(99, Math.max(35, Math.floor(lastMemory + (Math.random() * 4 - 2))));
+        const driftNetwork = Math.max(10, Math.floor(lastNetwork + (Math.random() * 40 - 20)));
+
+        // Shift arrays
+        timeLabels.shift();
+        const nextTimeLabel = new Date().toLocaleTimeString([], { hour12: false, minute: '2-digit', second: '2-digit' });
+        timeLabels.push(nextTimeLabel);
+
+        cpuData.shift();
+        cpuData.push(driftCpu);
+
+        memoryData.shift();
+        memoryData.push(driftMemory);
+
+        networkData.shift();
+        networkData.push(driftNetwork);
+
+        updateDashboardNumbers(driftCpu, driftMemory, driftNetwork);
+
+        if (myChart) {
+          myChart.update('none');
+        }
+
+        // Random trigger events in logger
+        if (driftCpu > 70) {
+          logTelemetryMessage('WARN', `CPU Core spike detected: ${driftCpu}% thread utilization.`);
+        }
+        if (Math.random() > 0.85) {
+          logTelemetryMessage('OK', `Successfully refreshed rendering matrices.`);
+        }
+      }
+
+      function toggleStreamFederation() {
+        if (simulationRunning) {
+          // Pause thread
+          simulationRunning = false;
+          clearInterval(streamInterval);
+          toggleSimulationBtn.className = "flex-1 py-3 px-4 border border-cyber-cyan/30 text-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 transition-colors uppercase flex items-center justify-center gap-2 rounded";
+          toggleSimulationBtn.innerHTML = `<i data-lucide="play" class="w-3.5 h-3.5"></i> SPEED REALTIME STREAM`;
+          
+          simulatorVisualIcon.className = "w-1.5 h-1.5 rounded-full bg-slate-500";
+          simulatorStatusLabel.innerText = "STALE";
+          logTelemetryMessage('SYS', `Telemetry thread stream paused from inspector console.`);
+        } else {
+          // Resume thread
+          simulationRunning = true;
+          
+          // Show canvas, hide placeholder
+          telemetryChartFiller.classList.add('hidden');
+          telemetryChartCanvas.classList.remove('hidden');
+
+          if (!myChart) {
+            initTelemetryChart();
+          }
+
+          updateDashboardNumbers(
+            cpuData[cpuData.length - 1],
+            memoryData[memoryData.length - 1],
+            networkData[networkData.length - 1]
+          );
+
+          streamInterval = setInterval(handleNextSimulationTick, simulationIntervalSpeed);
+          
+          toggleSimulationBtn.className = "flex-1 py-3 px-4 bg-cyber-cyan hover:bg-white text-black font-extrabold transition-colors uppercase flex items-center justify-center gap-2 rounded";
+          toggleSimulationBtn.innerHTML = `<i data-lucide="pause" class="w-3.5 h-3.5"></i> PAUSE REALTIME FEED`;
+          
+          simulatorVisualIcon.className = "w-1.5 h-1.5 rounded-full bg-cyber-cyan animate-ping";
+          simulatorStatusLabel.innerText = "ACTIVE";
+          logTelemetryMessage('SYS', `Realtime performance stream channel connected on port 3000.`);
+        }
+        lucide.createIcons();
+      }
+
+      toggleSimulationBtn.addEventListener('click', toggleStreamFederation);
+
+      triggerSpikeBtn.addEventListener('click', () => {
+        logTelemetryMessage('WARN', 'Manual hardware over-pressure spike initiated by remote gateway.');
+        
+        // Push instant maximum workloads
+        timeLabels.shift();
+        timeLabels.push(new Date().toLocaleTimeString([], { hour12: false, minute: '2-digit', second: '2-digit' }));
+        
+        cpuData.shift();
+        cpuData.push(96);
+
+        memoryData.shift();
+        memoryData.push(91);
+
+        networkData.shift();
+        networkData.push(495);
+
+        updateDashboardNumbers(96, 91, 495);
+
+        if (myChart) {
+          myChart.update();
+        }
+
+        if (!simulationRunning) {
+          // If paused, just connect instantly once
+          telemetryChartFiller.classList.add('hidden');
+          telemetryChartCanvas.classList.remove('hidden');
+          if (!myChart) {
+            initTelemetryChart();
+          }
+        }
+      });
+
+      // ==========================================
+      // CONTACT TRANS_SECURE FORM SUBMISSIONS
+      // ==========================================
+      const contactForm = document.getElementById('contactForm');
+      const contactName = document.getElementById('contactName');
+      const contactEmail = document.getElementById('contactEmail');
+      const contactMessage = document.getElementById('contactMessage');
+      const formSuccessAlert = document.getElementById('formSuccessAlert');
+      const resetFormBtn = document.getElementById('resetFormBtn');
+      const submissionsRecordLogs = document.getElementById('submissionsRecordLogs');
+      const submissionsRecordCount = document.getElementById('submissionsRecordCount');
+      const noSubmissionsLabel = document.getElementById('noSubmissionsLabel');
+
+      let submissionLogsList = [];
+
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const payloadName = contactName.value.trim();
+        const payloadEmail = contactEmail.value.trim();
+        const payloadMsg = contactMessage.value.trim();
+
+        if (!payloadName || !payloadEmail || !payloadMsg) return;
+
+        // Simulate secure transit delayed validation
+        const submitBtn = document.getElementById('submitFormBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "COMPILING PACKET SECTOR...";
+
+        setTimeout(() => {
+          // Success triggered
+          const timestampStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const auditRecord = {
+            id: `TX-${Math.floor(Math.random() * 89999 + 10000)}`,
+            name: payloadName,
+            email: payloadEmail,
+            message: payloadMsg,
+            time: timestampStr,
+            status: 'VERIFIED_API'
+          };
+
+          submissionLogsList.unshift(auditRecord);
+          updateAuditLogsDisplay();
+
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i data-lucide="send" class="w-4 h-4"></i> SUBMIT SECURE PACKET`;
+          lucide.createIcons();
+
+          // Overlay Success animations
+          formSuccessAlert.classList.remove('opacity-0', 'pointer-events-none');
+          formSuccessAlert.classList.add('opacity-100');
+
+          contactName.value = '';
+          contactEmail.value = '';
+          contactMessage.value = '';
+        }, 1200);
+      });
+
+      function updateAuditLogsDisplay() {
+        submissionsRecordCount.innerText = submissionLogsList.length;
+        if (submissionLogsList.length > 0) {
+          noSubmissionsLabel.classList.add('hidden');
+        } else {
+          noSubmissionsLabel.classList.remove('hidden');
+        }
+
+        submissionsRecordLogs.innerHTML = submissionLogsList.map(rec => `
+          <div class="p-3 bg-black/40 border border-white/5 rounded flex flex-col md:flex-row justify-between items-start md:items-center gap-3 font-mono text-[11px] hover:border-cyber-cyan/25 transition-colors select-none text-left">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-cyber-cyan font-bold">${rec.id}</span>
+                <span class="text-white font-medium">${rec.name}</span>
+                <span class="text-slate-500">(${rec.email})</span>
+              </div>
+              <div class="text-slate-400 font-light leading-snug truncate" style="max-width: 480px">
+                "${rec.message}"
+              </div>
+            </div>
+            <div class="flex items-center gap-3.5 text-[9px] uppercase tracking-wider md:self-center">
+              <span class="text-slate-500">${rec.time}</span>
+              <span class="px-2 py-0.5 rounded bg-green-500/10 border border-green-500/20 text-green-400 font-bold flex items-center gap-1">
+                <span class="w-1 h-1 rounded-full bg-green-400"></span> ${rec.status}
+              </span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      resetFormBtn.addEventListener('click', () => {
+        formSuccessAlert.classList.add('opacity-0', 'pointer-events-none');
+        formSuccessAlert.classList.remove('opacity-100');
+      });
+
+      // Initialize Lucide icons on boot
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
